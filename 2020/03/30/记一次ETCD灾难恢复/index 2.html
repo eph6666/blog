@@ -18,11 +18,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          东湖 - yfwang | Blog
+          记一次ETCD灾难恢复 - yfwang | Blog
         
     </title>
 
-    <link rel="canonical" href="https://blog.yi-fei.wang/2020/03/30/东湖/">
+    <link rel="canonical" href="https://blog.yi-fei.wang/2020/03/30/记一次ETCD灾难恢复/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -92,10 +92,12 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#随笔" title="随笔">随笔</a>
+                              <a class="tag" href="/tags/#Kubernetes" title="Kubernetes">Kubernetes</a>
+                            
+                              <a class="tag" href="/tags/#ETCD" title="ETCD">ETCD</a>
                             
                         </div>
-                        <h1>东湖</h1>
+                        <h1>记一次ETCD灾难恢复</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by yfwang on
@@ -216,11 +218,32 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p><img src="http://ww1.sinaimg.cn/large/005K5wz9ly1gdc04qypb3j30u0190q8p.jpg" alt="_20200225214104.jpg"></p>
-<p>肺炎这件事情从开始知道到现在也有一个多月了，一直没有太多的感受，可能是对武汉了解不深吧，上次去的匆忙，走的匆忙，感觉自己之于武汉，就是个局外人。</p>
-<p>今天在家无聊，就回忆过去一些美好的时间，想到有个下午是自己一个人坐在东湖边，是少有的清静悠闲的时光，吹着风，看着游客和学生，虽然自己也是一个提着行李箱的游客。</p>
-<p>湖边的风可能就是武汉的风景和武汉的舒爽。</p>
-<p>武汉加油吧，希望能有空再去那个台阶坐上一下午</p>
+                <h1 id="记一次ETCD的故障恢复"><a href="#记一次ETCD的故障恢复" class="headerlink" title="记一次ETCD的故障恢复"></a>记一次ETCD的故障恢复</h1><p>事情的起因是，前两天给客户新搭建了一个K8S的集群，今天客户问我说exec有点问题让我给看一下。</p>
+<p>那就看看呗。</p>
+<p>上去看看，的确不能exec，报错：</p>
+<pre><code>Error from server: error dialing backend: dial tcp 10.17.77.29:10250: i/o timeout
+</code></pre><p>kubectl get svc一下吧，发现cluster ip 是 10.16段的，这不对啊，我一看配置文件是直接复制的dev集群的，没改，得，重来吧，删了集群重拉！</p>
+<p>然后就在本地更新配置，清空S3，重新上传，删除主机，等待重拉。</p>
+<p>这时候还出了一个小插曲，本来要删除三个Master主机，结果手滑吧跳板机也删了，还好这个跳板机上没啥东西，赶紧恢复吧，把之前的工作量有做了一遍。</p>
+<p>折腾了半天，美滋滋的拉起跳板机，重新get svc，不对啊，怎么还是16，下意识看了一下S3，发现那个S3还是空的，不对我上传了啊，我扫了一眼桶名，是dev环境的桶，我心一凉，赶紧上传dev桶里的数据。</p>
+<p>我登录dev跳板机一看，k8s里啥也没了，只剩几滴尿在我的裤子上。</p>
+<p>告诉自己别慌，冷静</p>
+<p>先看看能不能恢复，不行就重建吧，毕竟还没投入生产，没啥数据是万幸。</p>
+<p>这里吐槽一下，为啥我把S3上的etcd backups删了，主库会空？？？？</p>
+<p>先看看本机ETCD能否回滚吧，看了一下本机没有备份。</p>
+<p>那咋办呢，心里更慌了，研究一下S3有没有办法恢复，发现S3的bucket开了版本控制，不幸中的万幸，AWS牛逼~</p>
+<p>恢复最后一个S3的备份，然后看看怎么恢复ETCD</p>
+<p>因为集群是用Kops为核心，自己魔改的，ETCD用的还是kops的</p>
+<p>从备份里恢复吧</p>
+<pre><code>./etcd-manager-ctl --backup-store=s3://cf-uws/cluster.luqel-water.k8s.local/backups/etcd/main list-backups
+./etcd-manager-ctl --backup-store=s3://cf-uws/cluster.luqel-water.k8s.local/backups/etcd/main restore-backup 2020-03-23T06:49:19Z-007671
+</code></pre><p>恢复完，需要对每个etcd容器重启：</p>
+<pre><code>docker restart xxxxxx
+</code></pre><p>解决了~AWS 牛逼!</p>
+<p>恢复了之后就去修复CIDR重复的问题，我说ETCD怎么总和之前Dev那套环境的ETCD组成集群呢。</p>
+<p>修改了cluster.spec，等AWS Autoscaling group拉起EC2即可。</p>
+<p>集群配置更新完之后，发现之前的问题仍存在。</p>
+<p>对比发现Master的安全组没有添加Node的access，加上就解决了</p>
 
 
 
@@ -229,12 +252,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2020/03/30/说事儿/" data-toggle="tooltip" data-placement="top" title="说事儿">&larr; Previous Post</a>
+                            <a href="/2020/03/30/东湖/" data-toggle="tooltip" data-placement="top" title="东湖">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/2020/03/30/记一次ETCD灾难恢复/" data-toggle="tooltip" data-placement="top" title="记一次ETCD灾难恢复">Next Post &rarr;</a>
+                            <a href="/2020/03/30/Use-kops-to-Deploy-Kubernetes-on-AWS/" data-toggle="tooltip" data-placement="top" title="Use kops to Deploy Kubernetes on AWS">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -277,7 +300,9 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#随笔" title="随笔">随笔</a>
+                          <a class="tag" href="/tags/#Kubernetes" title="Kubernetes">Kubernetes</a>
+                        
+                          <a class="tag" href="/tags/#ETCD" title="ETCD">ETCD</a>
                         
                     </div>
                 </section>
@@ -332,23 +357,6 @@
 </style>
 
 
-
-    
-    <!-- Gitment commnet system -->
-    <div id="container"></div>
-    <script>
-        var gitment = new Gitment({
-            // id: '页面 ID', // 可选。默认为 location.href
-            owner: "eph6666",
-            repo: "blog-gitment",
-            oauth: {
-                client_id: "00f4073a43d74daa83b2",
-                client_secret: "f69522298542c1d3947c052210d094832ba20df4",
-            },
-        })
-        gitment.render('container')
-    </script>
-    
 
     <!-- Footer -->
     <!-- Footer -->
@@ -480,6 +488,23 @@
 	<a id="rocket" href="#top" class=""></a>
 	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
     <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+    <!-- Gitment commnet system -->
+    
+
+        <div id="container"></div>
+        <script>
+            var gitment = new Gitment({
+                // id: '页面 ID', // 可选。默认为 location.href
+                owner: "eph6666",
+                repo: "blog-gitment",
+                oauth: {
+                    client_id: "00f4073a43d74daa83b2",
+                    client_secret: "f69522298542c1d3947c052210d094832ba20df4",
+                },
+            })
+            gitment.render('container')
+        </script>
+    
 <!-- Image to hack wechat -->
 <!-- <img src="https://blog.yi-fei.wang/some pic" width="0" height="0" /> -->
 <!-- Migrate from head to bottom, no longer block render and still work -->

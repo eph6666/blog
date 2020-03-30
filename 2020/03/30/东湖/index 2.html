@@ -333,23 +333,6 @@
 
 
 
-    
-    <!-- Gitment commnet system -->
-    <div id="container"></div>
-    <script>
-        var gitment = new Gitment({
-            // id: '页面 ID', // 可选。默认为 location.href
-            owner: "eph6666",
-            repo: "blog-gitment",
-            oauth: {
-                client_id: "00f4073a43d74daa83b2",
-                client_secret: "f69522298542c1d3947c052210d094832ba20df4",
-            },
-        })
-        gitment.render('container')
-    </script>
-    
-
     <!-- Footer -->
     <!-- Footer -->
 <footer>
@@ -480,6 +463,23 @@
 	<a id="rocket" href="#top" class=""></a>
 	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
     <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+    <!-- Gitment commnet system -->
+    
+
+        <div id="container"></div>
+        <script>
+            var gitment = new Gitment({
+                // id: '页面 ID', // 可选。默认为 location.href
+                owner: "eph6666",
+                repo: "blog-gitment",
+                oauth: {
+                    client_id: "00f4073a43d74daa83b2",
+                    client_secret: "f69522298542c1d3947c052210d094832ba20df4",
+                },
+            })
+            gitment.render('container')
+        </script>
+    
 <!-- Image to hack wechat -->
 <!-- <img src="https://blog.yi-fei.wang/some pic" width="0" height="0" /> -->
 <!-- Migrate from head to bottom, no longer block render and still work -->
