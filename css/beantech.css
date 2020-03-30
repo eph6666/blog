@@ -1022,8 +1022,3 @@ img::-moz-selection {
 .page-fullscreen footer .copyright a:hover {
   color: #ddd;
 }
-
-.gt-container {
-    width: 70%;
-    margin: auto;
-}
