@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="keyword" content>
+    <meta name="referrer" content="same-origin">
+    <meta name="referrer" content="no-referrer">
     <!-- <link rel="shortcut icon" href="/img/ironman-draw.png"> -->
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -23,11 +25,11 @@
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-    <!-- Custom CSS --> 
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/beantech.min.css">
 
     <link rel="stylesheet" href="/css/donate.css">
-    
+
     <!-- Pygments Highlight CSS -->
     <link rel="stylesheet" href="/css/highlight.css">
 
@@ -134,7 +136,7 @@
 
                         
                         <li>
-                            <a class="navbar-brand" href="/about/">About</a>
+                            <a class="navbar-brand" href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -148,7 +150,7 @@
 
                         
                         <li>
-                            <a class="navbar-brand" href="/tags/">Tags</a>
+                            <a class="navbar-brand" href="/about/">About</a>
                         </li>
                         
                     
@@ -219,8 +221,8 @@
 
             
             <div class="one-tag-list">
-                <span class="fa fa-calendar-times-o listing-seperator" id="2019">
-                    <span class="tag-text">2019</span>
+                <span class="fa fa-calendar-times-o listing-seperator" id="2020">
+                    <span class="tag-text">2020</span>
                 </span>
                 <ul>
                 
@@ -229,11 +231,11 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <li>
-                    05-31
+                    03-30
                     <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/2019/05/31/随笔-5.31/" style="color: #0085a1">
+                    <a href="/2020/03/30/东湖/" style="color: #0085a1">
                         <span>
-                            随笔 5.31
+                            东湖
                         </span>
                     </a>
                     <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
@@ -244,9 +246,24 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <li>
-                    05-29
+                    03-30
                     <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    <a href="/2019/05/29/Use kops to Deploy Kubernetes on AWS/" style="color: #0085a1">
+                    <a href="/2020/03/30/记一次ETCD灾难恢复/" style="color: #0085a1">
+                        <span>
+                            记一次ETCD灾难恢复
+                        </span>
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </li>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <li>
+                    03-30
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <a href="/2020/03/30/Use-kops-to-Deploy-Kubernetes-on-AWS/" style="color: #0085a1">
                         <span>
                             Use kops to Deploy Kubernetes on AWS
                         </span>
@@ -293,7 +310,15 @@
             
         
             
-            <a href="/tags/#AWS" title="AWS" rel="1">AWS</a>
+            <a href="/tags/#ETCD" title="ETCD" rel="1">ETCD</a>
+            
+        
+            
+            <a href="/tags/#随笔" title="随笔" rel="1">随笔</a>
+            
+        
+            
+            <a href="/tags/#kubernetes" title="kubernetes" rel="1">kubernetes</a>
             
         
     </div>
@@ -358,11 +383,15 @@
     <ul>
       
         <li>
-          <a href="/2019/05/31/随笔-5.31/">随笔 5.31</a>
+          <a href="/2020/03/30/东湖/">东湖</a>
         </li>
       
         <li>
-          <a href="/2019/05/29/Use kops to Deploy Kubernetes on AWS/">Use kops to Deploy Kubernetes on AWS</a>
+          <a href="/2020/03/30/记一次ETCD灾难恢复/">记一次ETCD灾难恢复</a>
+        </li>
+      
+        <li>
+          <a href="/2020/03/30/Use-kops-to-Deploy-Kubernetes-on-AWS/">Use kops to Deploy Kubernetes on AWS</a>
         </li>
       
     </ul>
@@ -373,7 +402,7 @@
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">3</span></li></ul>
     </div>
 
         <hr>
@@ -428,7 +457,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; yfwang 2019
+                    Copyright &copy; yfwang 2020
                     <br>
                     Theme by <a href="https://github.com/huxpro/huxpro.github.io/">Huxpro</a>
                     <span style="display: inline-block; margin: 0 5px;">
@@ -437,17 +466,15 @@
                     re-Ported by <a href="https://blog.yi-fei.wang/">yfwang</a> |
                     <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="91px" height="20px" src="https://ghbtns.com/github-btn.html?user=eph6666&repo=blog&type=star&count=true">
                     </iframe>
-                    <div style="width:300px;margin:0 auto; padding:20px 0;">
-                        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502038003" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src style="float:left;">
-                            <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">京公网安备 11010502038003号
-                            </p>
-                        </a>
-                    </div>
+                    <br>
+                    <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502038003" style="display:inline-block;text-decoration:none;height:10px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393; font-size: initial;"><img src="http://www.beian.gov.cn/portal/download?token=1d734d5d-7a2e-4a43-bdfd-98a0b3f95f53" style="float:left;vertical-align:middle">京公网安备 11010502038003号 </a>
+                    
                 </p>
             </div>
         </div>
     </div>
 </footer>
+
 
 <!-- jQuery -->
 <script src="/js/jquery.min.js"></script>

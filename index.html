@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="keyword" content>
+    <meta name="referrer" content="same-origin">
+    <meta name="referrer" content="no-referrer">
     <!-- <link rel="shortcut icon" href="/img/ironman-draw.png"> -->
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -23,11 +25,11 @@
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-    <!-- Custom CSS --> 
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/beantech.min.css">
 
     <link rel="stylesheet" href="/css/donate.css">
-    
+
     <!-- Pygments Highlight CSS -->
     <link rel="stylesheet" href="/css/highlight.css">
 
@@ -71,7 +73,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('http://ww1.sinaimg.cn/large/005K5wz9ly1g3kougq9i8j33yo2qyb2a.jpg') 
+            background-image: url('https://ww1.sinaimg.cn/large/005K5wz9ly1g3kougq9i8j33yo2qyb2a.jpg') 
             /*config*/
         
     }
@@ -134,7 +136,7 @@
 
                         
                         <li>
-                            <a class="navbar-brand" href="/about/">About</a>
+                            <a class="navbar-brand" href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -148,7 +150,7 @@
 
                         
                         <li>
-                            <a class="navbar-brand" href="/tags/">Tags</a>
+                            <a class="navbar-brand" href="/about/">About</a>
                         </li>
                         
                     
@@ -211,24 +213,30 @@
 
 <div class="post-preview">
 
-    <a href="/2019/05/31/随笔-5.31/">
+    <a href="/2020/03/30/东湖/">
         <h2 class="post-title">
-            随笔 5.31
+            东湖
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            随笔 5月31日5月最后一个工作日，儿童节快乐
-黄帝者，少典之子，姓公孙，名曰轩辕。生而神灵，弱而能言，幼而徇齐，长而敦敏，成而聪明。轩辕之时，神农氏世衰。诸侯相侵伐，暴虐百姓，而神农氏弗能征。於是轩辕乃习用干戈，以征不享，诸侯咸来宾从。而蚩尤最为暴，莫能伐。炎帝欲侵陵诸侯，诸侯咸归轩辕。轩辕乃修德振兵，治五气，蓺五种，抚万民，度四方，教熊罴貔貅貙虎，以与炎帝战於阪泉之野。三战，然後得其志。......
+            
+肺炎这件事情从开始知道到现在也有一个多月了，一直没有太多的感受，可能是对武汉了解不深吧，上次去的匆忙，走的匆忙，感觉自己之于武汉，就是个局外人。
+今天在家无聊，就回忆过去一些美好的时间，想到有个下午是自己一个人坐在东湖边，是少有的清静悠闲的时光，吹着风，看着游客和学生，虽然自己也是一个提着行李箱的游客。
+湖边的风可能就是武汉的风景和武汉的舒爽。
+武汉加油吧，希望能有空再去那个台阶坐上一下午
+...
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by yfwang on
-            2019-05-31
+            2020-03-30
         </p>
         <div class="tags">
+            
+              <a href="/tags/#随笔" title="随笔">随笔</a>
             
         </div>
     
@@ -238,7 +246,41 @@
 
 <div class="post-preview">
 
-    <a href="/2019/05/29/Use kops to Deploy Kubernetes on AWS/">
+    <a href="/2020/03/30/记一次ETCD灾难恢复/">
+        <h2 class="post-title">
+            记一次ETCD灾难恢复
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            记一次ETCD的故障恢复事情的起因是，前两天给客户新搭建了一个K8S的集群，今天客户问我说exec有点问题让我给看一下。
+那就看看呗。
+上去看看，的确不能exec，报错：
+Error from server: error dialing backend: dial tcp 10.17.77.29:10250: i/o timeout
+kubectl get svc一下吧，发现cluster ......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by yfwang on
+            2020-03-30
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Kubernetes" title="Kubernetes">Kubernetes</a>
+            
+              <a href="/tags/#ETCD" title="ETCD">ETCD</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2020/03/30/Use-kops-to-Deploy-Kubernetes-on-AWS/">
         <h2 class="post-title">
             Use kops to Deploy Kubernetes on AWS
         </h2>
@@ -246,20 +288,18 @@
             
         </h3>
         <div class="post-content-preview">
-            #Use kops to Deploy Kubernetes on AWS
-##What is kops?kops给自己的定义是The easiest way to get a production grade Kubernetes cluster up and running，最简单途径来启动和运行Kubernetes。（但是可能不太符合广告法：））kops helps you creat......
+            Use kops to Deploy Kubernetes on AWSWhat is kops?kops给自己的定义是The easiest way to get a production grade Kubernetes cluster up and running，最简单途径来启动和运行Kubernetes。（但是可能不太符合广告法：））
+kops helps you create, ......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by yfwang on
-            2019-05-29
+            2020-03-30
         </p>
         <div class="tags">
             
-              <a href="/tags/#Kubernetes" title="Kubernetes">Kubernetes</a>
-            
-              <a href="/tags/#AWS" title="AWS">AWS</a>
+              <a href="/tags/#kubernetes" title="kubernetes">kubernetes</a>
             
         </div>
     
@@ -308,7 +348,15 @@
             
         
             
-            <a href="/tags/#AWS" title="AWS" rel="1">AWS</a>
+            <a href="/tags/#ETCD" title="ETCD" rel="1">ETCD</a>
+            
+        
+            
+            <a href="/tags/#随笔" title="随笔" rel="1">随笔</a>
+            
+        
+            
+            <a href="/tags/#kubernetes" title="kubernetes" rel="1">kubernetes</a>
             
         
     </div>
@@ -373,11 +421,15 @@
     <ul>
       
         <li>
-          <a href="/2019/05/31/随笔-5.31/">随笔 5.31</a>
+          <a href="/2020/03/30/东湖/">东湖</a>
         </li>
       
         <li>
-          <a href="/2019/05/29/Use kops to Deploy Kubernetes on AWS/">Use kops to Deploy Kubernetes on AWS</a>
+          <a href="/2020/03/30/记一次ETCD灾难恢复/">记一次ETCD灾难恢复</a>
+        </li>
+      
+        <li>
+          <a href="/2020/03/30/Use-kops-to-Deploy-Kubernetes-on-AWS/">Use kops to Deploy Kubernetes on AWS</a>
         </li>
       
     </ul>
@@ -388,7 +440,7 @@
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">3</span></li></ul>
     </div>
 
         <hr>
@@ -443,7 +495,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; yfwang 2019
+                    Copyright &copy; yfwang 2020
                     <br>
                     Theme by <a href="https://github.com/huxpro/huxpro.github.io/">Huxpro</a>
                     <span style="display: inline-block; margin: 0 5px;">
@@ -452,17 +504,15 @@
                     re-Ported by <a href="https://blog.yi-fei.wang/">yfwang</a> |
                     <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="91px" height="20px" src="https://ghbtns.com/github-btn.html?user=eph6666&repo=blog&type=star&count=true">
                     </iframe>
-                    <div style="width:300px;margin:0 auto; padding:20px 0;">
-                        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502038003" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src style="float:left;">
-                            <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">京公网安备 11010502038003号
-                            </p>
-                        </a>
-                    </div>
+                    <br>
+                    <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502038003" style="display:inline-block;text-decoration:none;height:10px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393; font-size: initial;"><img src="http://www.beian.gov.cn/portal/download?token=1d734d5d-7a2e-4a43-bdfd-98a0b3f95f53" style="float:left;vertical-align:middle">京公网安备 11010502038003号 </a>
+                    
                 </p>
             </div>
         </div>
     </div>
 </footer>
+
 
 <!-- jQuery -->
 <script src="/js/jquery.min.js"></script>

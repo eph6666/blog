@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="keyword" content>
+    <meta name="referrer" content="same-origin">
+    <meta name="referrer" content="no-referrer">
     <!-- <link rel="shortcut icon" href="/img/ironman-draw.png"> -->
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -23,11 +25,11 @@
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-    <!-- Custom CSS --> 
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/beantech.min.css">
 
     <link rel="stylesheet" href="/css/donate.css">
-    
+
     <!-- Pygments Highlight CSS -->
     <link rel="stylesheet" href="/css/highlight.css">
 
@@ -71,7 +73,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('http://wx3.sinaimg.cn/large/005K5wz9ly1g1oc1ki98bj318y0u0b2e.jpg')
+            background-image: url('https://wx3.sinaimg.cn/large/005K5wz9ly1g1oc1ki98bj318y0u0b2e.jpg')
             /*page*/
         
     }
@@ -134,7 +136,7 @@
 
                         
                         <li>
-                            <a class="navbar-brand" href="/about/">About</a>
+                            <a class="navbar-brand" href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -148,7 +150,7 @@
 
                         
                         <li>
-                            <a class="navbar-brand" href="/tags/">Tags</a>
+                            <a class="navbar-brand" href="/about/">About</a>
                         </li>
                         
                     
@@ -200,7 +202,11 @@
                 
                     <a href="#Kubernetes" title="Kubernetes" rel="1">Kubernetes</a>
                 
-                    <a href="#AWS" title="AWS" rel="1">AWS</a>
+                    <a href="#ETCD" title="ETCD" rel="1">ETCD</a>
+                
+                    <a href="#随笔" title="随笔" rel="1">随笔</a>
+                
+                    <a href="#kubernetes" title="kubernetes" rel="1">kubernetes</a>
                 
             </div>
 
@@ -217,9 +223,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2019/05/29/Use kops to Deploy Kubernetes on AWS/">
+                     <a href="/2020/03/30/记一次ETCD灾难恢复/">
                         <h2 class="post-title">
-                            Use kops to Deploy Kubernetes on AWS
+                            记一次ETCD灾难恢复
                         </h2>
                         
                     </a>
@@ -230,8 +236,8 @@
             </div>
             
             <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="AWS">
-                    <span class="tag-text">AWS</span>
+                <span class="fa fa-tag listing-seperator" id="ETCD">
+                    <span class="tag-text">ETCD</span>
                 </span>
                 
                   <!-- <li class="listing-item">
@@ -239,7 +245,51 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2019/05/29/Use kops to Deploy Kubernetes on AWS/">
+                     <a href="/2020/03/30/记一次ETCD灾难恢复/">
+                        <h2 class="post-title">
+                            记一次ETCD灾难恢复
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="随笔">
+                    <span class="tag-text">随笔</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2020/03/30/东湖/">
+                        <h2 class="post-title">
+                            东湖
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="kubernetes">
+                    <span class="tag-text">kubernetes</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2020/03/30/Use-kops-to-Deploy-Kubernetes-on-AWS/">
                         <h2 class="post-title">
                             Use kops to Deploy Kubernetes on AWS
                         </h2>
@@ -297,7 +347,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; yfwang 2019
+                    Copyright &copy; yfwang 2020
                     <br>
                     Theme by <a href="https://github.com/huxpro/huxpro.github.io/">Huxpro</a>
                     <span style="display: inline-block; margin: 0 5px;">
@@ -306,17 +356,15 @@
                     re-Ported by <a href="https://blog.yi-fei.wang/">yfwang</a> |
                     <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="91px" height="20px" src="https://ghbtns.com/github-btn.html?user=eph6666&repo=blog&type=star&count=true">
                     </iframe>
-                    <div style="width:300px;margin:0 auto; padding:20px 0;">
-                        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502038003" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src style="float:left;">
-                            <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">京公网安备 11010502038003号
-                            </p>
-                        </a>
-                    </div>
+                    <br>
+                    <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502038003" style="display:inline-block;text-decoration:none;height:10px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393; font-size: initial;"><img src="http://www.beian.gov.cn/portal/download?token=1d734d5d-7a2e-4a43-bdfd-98a0b3f95f53" style="float:left;vertical-align:middle">京公网安备 11010502038003号 </a>
+                    
                 </p>
             </div>
         </div>
     </div>
 </footer>
+
 
 <!-- jQuery -->
 <script src="/js/jquery.min.js"></script>
