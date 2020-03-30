@@ -11,8 +11,8 @@
     <meta name="keyword" content>
     <meta name="referrer" content="same-origin">
     <meta name="referrer" content="no-referrer">
-    <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-    <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
     <!-- <link rel="shortcut icon" href="/img/ironman-draw.png"> -->
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -138,7 +138,7 @@
 
                         
                         <li>
-                            <a class="navbar-brand" href="/tags/">Tags</a>
+                            <a class="navbar-brand" href="/about/">About</a>
                         </li>
                         
                     
@@ -152,7 +152,7 @@
 
                         
                         <li>
-                            <a class="navbar-brand" href="/about/">About</a>
+                            <a class="navbar-brand" href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -227,21 +227,6 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2020/03/30/向死而生/">
-                        <h2 class="post-title">
-                            向死而生
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
                      <a href="/2020/03/30/东湖/">
                         <h2 class="post-title">
                             东湖
@@ -257,9 +242,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2020/03/30/承诺/">
+                     <a href="/2020/03/30/向死而生/">
                         <h2 class="post-title">
-                            承诺
+                            向死而生
                         </h2>
                         
                     </a>
@@ -290,6 +275,21 @@
                      <a href="/2020/03/30/羊肉串/">
                         <h2 class="post-title">
                             羊肉串
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2020/03/30/承诺/">
+                        <h2 class="post-title">
+                            承诺
                         </h2>
                         
                     </a>
@@ -413,9 +413,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2020/03/30/记一次ETCD灾难恢复/">
+                     <a href="/2020/03/30/Use-kops-to-Deploy-Kubernetes-on-AWS/">
                         <h2 class="post-title">
-                            记一次ETCD灾难恢复
+                            Use kops to Deploy Kubernetes on AWS
                         </h2>
                         
                     </a>
@@ -428,9 +428,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2020/03/30/Use-kops-to-Deploy-Kubernetes-on-AWS/">
+                     <a href="/2020/03/30/记一次ETCD灾难恢复/">
                         <h2 class="post-title">
-                            Use kops to Deploy Kubernetes on AWS
+                            记一次ETCD灾难恢复
                         </h2>
                         
                     </a>
@@ -469,21 +469,6 @@
 </div>
 
 
-    
-    <!-- Gitment commnet system -->
-    <div id="container"></div>
-    <script>
-        var gitment = new Gitment({
-            // id: '页面 ID', // 可选。默认为 location.href
-            owner: "eph6666",
-            repo: "blog-gitment",
-            oauth: {
-                client_id: "00f4073a43d74daa83b2",
-                client_secret: "f69522298542c1d3947c052210d094832ba20df4",
-            },
-        })
-        gitment.render('container')
-    </script>
     
 
     <!-- Footer -->
