@@ -18,11 +18,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          记一次ETCD灾难恢复 - yfwang | Blog
+          向死而生 - yfwang | Blog
         
     </title>
 
-    <link rel="canonical" href="https://blog.yi-fei.wang/2020/03/30/记一次ETCD灾难恢复/">
+    <link rel="canonical" href="https://blog.yi-fei.wang/2020/03/30/向死而生/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -92,12 +92,12 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#Kubernetes" title="Kubernetes">Kubernetes</a>
+                              <a class="tag" href="/tags/#随笔" title="随笔">随笔</a>
                             
-                              <a class="tag" href="/tags/#ETCD" title="ETCD">ETCD</a>
+                              <a class="tag" href="/tags/#哲学" title="哲学">哲学</a>
                             
                         </div>
-                        <h1>记一次ETCD灾难恢复</h1>
+                        <h1>向死而生</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by yfwang on
@@ -148,14 +148,14 @@
 
                         
                         <li>
-                            <a class="navbar-brand" href="/about/">About</a>
+                            <a class="navbar-brand" href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a class="navbar-brand" href="/archive/">Archives</a>
+                            <a class="navbar-brand" href="/about/">About</a>
                         </li>
                         
                     
@@ -218,32 +218,27 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="记一次ETCD的故障恢复"><a href="#记一次ETCD的故障恢复" class="headerlink" title="记一次ETCD的故障恢复"></a>记一次ETCD的故障恢复</h1><p>事情的起因是，前两天给客户新搭建了一个K8S的集群，今天客户问我说exec有点问题让我给看一下。</p>
-<p>那就看看呗。</p>
-<p>上去看看，的确不能exec，报错：</p>
-<pre><code>Error from server: error dialing backend: dial tcp 10.17.77.29:10250: i/o timeout
-</code></pre><p>kubectl get svc一下吧，发现cluster ip 是 10.16段的，这不对啊，我一看配置文件是直接复制的dev集群的，没改，得，重来吧，删了集群重拉！</p>
-<p>然后就在本地更新配置，清空S3，重新上传，删除主机，等待重拉。</p>
-<p>这时候还出了一个小插曲，本来要删除三个Master主机，结果手滑吧跳板机也删了，还好这个跳板机上没啥东西，赶紧恢复吧，把之前的工作量有做了一遍。</p>
-<p>折腾了半天，美滋滋的拉起跳板机，重新get svc，不对啊，怎么还是16，下意识看了一下S3，发现那个S3还是空的，不对我上传了啊，我扫了一眼桶名，是dev环境的桶，我心一凉，赶紧上传dev桶里的数据。</p>
-<p>我登录dev跳板机一看，k8s里啥也没了，只剩几滴尿在我的裤子上。</p>
-<p>告诉自己别慌，冷静</p>
-<p>先看看能不能恢复，不行就重建吧，毕竟还没投入生产，没啥数据是万幸。</p>
-<p>这里吐槽一下，为啥我把S3上的etcd backups删了，主库会空？？？？</p>
-<p>先看看本机ETCD能否回滚吧，看了一下本机没有备份。</p>
-<p>那咋办呢，心里更慌了，研究一下S3有没有办法恢复，发现S3的bucket开了版本控制，不幸中的万幸，AWS牛逼~</p>
-<p>恢复最后一个S3的备份，然后看看怎么恢复ETCD</p>
-<p>因为集群是用Kops为核心，自己魔改的，ETCD用的还是kops的</p>
-<p>从备份里恢复吧</p>
-<pre><code>./etcd-manager-ctl --backup-store=s3://cf-uws/cluster.luqel-water.k8s.local/backups/etcd/main list-backups
-./etcd-manager-ctl --backup-store=s3://cf-uws/cluster.luqel-water.k8s.local/backups/etcd/main restore-backup 2020-03-23T06:49:19Z-007671
-</code></pre><p>恢复完，需要对每个etcd容器重启：</p>
-<pre><code>docker restart xxxxxx
-</code></pre><p>解决了~AWS 牛逼!</p>
-<p>恢复了之后就去修复CIDR重复的问题，我说ETCD怎么总和之前Dev那套环境的ETCD组成集群呢。</p>
-<p>修改了cluster.spec，等AWS Autoscaling group拉起EC2即可。</p>
-<p>集群配置更新完之后，发现之前的问题仍存在。</p>
-<p>对比发现Master的安全组没有添加Node的access，加上就解决了</p>
+                <p>海德格尔的向死而生和列维纳斯的向死而生并不一样</p>
+<p><a href="https://zh.wikipedia.org/wiki/%E9%A9%AC%E4%B8%81%C2%B7%E6%B5%B7%E5%BE%B7%E6%A0%BC%E5%B0%94" target="_blank" rel="noopener">马丁·海德格尔</a></p>
+<p><a href="https://zh.wikipedia.org/zh-hans/%E4%BC%8A%E6%9B%BC%E7%B4%90%E7%88%BE%C2%B7%E5%88%97%E7%B6%AD%E7%B4%8D%E6%96%AF" target="_blank" rel="noopener">伊曼紐爾·列維納斯</a></p>
+<p>海德格尔有一本书《存在与时间》，时间为什么会有意义，就是因为有了死亡。</p>
+<p>因为死亡是一个确定的终结点，我们的一切事情都因为这个死亡的终结点，而变得有意义。</p>
+<p>如果没有死亡，我们时间就是可以随意支配的。不用急着工作，不用急着赚钱，不用着急读书，因为一切都有时间去做。</p>
+<p>但因为有一个死亡的点在那，我们知道我们的时间是有限的，而我们的时间才变得有意义，所以才要去计划去完成。</p>
+<p>所以说海德格尔他觉得死亡时不可能性当中的可能性，所以我们向死而生，是因为这个死亡是我们的一切，时间才有了意义。</p>
+<p>海德格尔的向死而生是带有了一些积极的色彩的，甚至有了一些英雄主义，有一些男子气概的。</p>
+<p>他的学生，列维纳斯，却反对这种海德格尔的，反对海德格尔是一个确定性。列维纳斯觉得死亡时不可被把我的，死亡是不确定的。</p>
+<p>我，我这个主体，是不能认识我之外的东西，如果我可知，我意识到死亡，那就不等于死亡。</p>
+<p>死亡是发生在我我断绝意识那一瞬间的，所以死亡是不可知的，也不是一个可确定的东西。</p>
+<p>列维纳斯觉得死亡不可被把握，他觉得我们自己与自身因为一种很极端的被动死亡而分裂。</p>
+<p>他这种死亡是一种带有女性经验的，消极的想法。</p>
+<p>关于向死而生，还有一个延伸，海德格尔觉得爱欲是是超越死亡的。</p>
+<p>比如父母因为爱情而结婚生子，他等于在某种维度上，延续了这对父母的时间。所以说即使这对父母不在人世，这个孩子也是因为这份爱而存在，从而延续了双方的生命，那么这样一种东西是可以超越死亡的。</p>
+<p>爱比死更强大，这不是一句小清新的话，这也是海德格尔的一种思想，他觉得爱欲是可以超越有限性时间的一种方式。</p>
+<p>在这个观点里，所有可把控的，可预见的的续存，都不是狭义的死亡，包括遗体的冷冻或者是其他的方法存在可能性，都不是死亡。</p>
+<p>拉康有一个主体的思想，在尼采的时候，上帝不存在了，到了拉康这里，是我都不存在了。</p>
+<p>拉康有一个观点，是镜像理论，就是婴儿在几个月时，第一次意识到’我‘的存在，是在镜子里看到了自己，他才会慢慢懂得，这个是’我‘。所以他最开始对’自己‘ ’我‘的建构是通过其他东西建构的，是通过镜像里虚拟的形象去建构的。我建构的那是我真的我吗，那个只是一个镜子里的虚拟的影像。所以我们的一切都是通过外接的刺激和环境的刺激来建构的，所以其实’我’这个概念一直是不存在的。</p>
+<p>西方哲学史发展到现在，就是围绕着主体进行思考。拉康是把西方哲学史发展到现在的根基抽掉了，就是主体不存在了，这很恐怖。</p>
 
 
 
@@ -251,13 +246,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2020/03/30/东湖/" data-toggle="tooltip" data-placement="top" title="东湖">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2020/03/30/Use-kops-to-Deploy-Kubernetes-on-AWS/" data-toggle="tooltip" data-placement="top" title="Use kops to Deploy Kubernetes on AWS">Next Post &rarr;</a>
+                            <a href="/2020/03/30/犬儒主义/" data-toggle="tooltip" data-placement="top" title="犬儒主义">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -300,9 +291,9 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#Kubernetes" title="Kubernetes">Kubernetes</a>
+                          <a class="tag" href="/tags/#随笔" title="随笔">随笔</a>
                         
-                          <a class="tag" href="/tags/#ETCD" title="ETCD">ETCD</a>
+                          <a class="tag" href="/tags/#哲学" title="哲学">哲学</a>
                         
                     </div>
                 </section>
@@ -357,6 +348,23 @@
 </style>
 
 
+
+    
+    <!-- Gitalk commnet system -->
+    <div id="gitalk-container" style="width: 70%; margin: auto; bottom: 0"></div>
+    <script>
+        const gitalk = new Gitalk({
+            clientID: "00f4073a43d74daa83b2",
+            clientSecret: "f69522298542c1d3947c052210d094832ba20df4",
+            repo: "blog-gitalk",
+            owner: "eph6666",
+            admin: ["eph6666"],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: true  // Facebook-like distraction free mode
+        })
+        gitalk.render('gitalk-container')
+    </script>
+    
 
     <!-- Footer -->
     <!-- Footer -->
