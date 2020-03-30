@@ -145,14 +145,14 @@
 
                         
                         <li>
-                            <a class="navbar-brand" href="/about/">About</a>
+                            <a class="navbar-brand" href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a class="navbar-brand" href="/tags/">Tags</a>
+                            <a class="navbar-brand" href="/about/">About</a>
                         </li>
                         
                     
@@ -204,9 +204,9 @@
                 
                     <a href="#随笔" title="随笔" rel="8">随笔</a>
                 
-                    <a href="#电影" title="电影" rel="1">电影</a>
-                
                     <a href="#哲学" title="哲学" rel="2">哲学</a>
+                
+                    <a href="#电影" title="电影" rel="1">电影</a>
                 
                     <a href="#Kubernetes" title="Kubernetes" rel="2">Kubernetes</a>
                 
@@ -221,6 +221,21 @@
                 <span class="fa fa-tag listing-seperator" id="随笔">
                     <span class="tag-text">随笔</span>
                 </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2020/03/30/向死而生/">
+                        <h2 class="post-title">
+                            向死而生
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
                 
                   <!-- <li class="listing-item">
                   <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
@@ -272,9 +287,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2020/03/30/向死而生/">
+                     <a href="/2020/03/30/犬儒主义/">
                         <h2 class="post-title">
-                            向死而生
+                            犬儒主义
                         </h2>
                         
                     </a>
@@ -290,21 +305,6 @@
                      <a href="/2020/03/30/羊肉串/">
                         <h2 class="post-title">
                             羊肉串
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2020/03/30/犬儒主义/">
-                        <h2 class="post-title">
-                            犬儒主义
                         </h2>
                         
                     </a>
@@ -345,28 +345,6 @@
             </div>
             
             <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="电影">
-                    <span class="tag-text">电影</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2020/03/30/电影史/">
-                        <h2 class="post-title">
-                            电影史
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
                 <span class="fa fa-tag listing-seperator" id="哲学">
                     <span class="tag-text">哲学</span>
                 </span>
@@ -394,6 +372,28 @@
                      <a href="/2020/03/30/犬儒主义/">
                         <h2 class="post-title">
                             犬儒主义
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="电影">
+                    <span class="tag-text">电影</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2020/03/30/电影史/">
+                        <h2 class="post-title">
+                            电影史
                         </h2>
                         
                     </a>
@@ -518,7 +518,7 @@
                     <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="91px" height="20px" src="https://ghbtns.com/github-btn.html?user=eph6666&repo=blog&type=star&count=true">
                     </iframe>
                     <br>
-                    <a target="_blank" href style="display:inline-block;text-decoration:none;height:10px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393; font-size: initial;"><img src="logo.jpg" style="float:left;vertical-align:middle">京公网安备 11010502038003号 </a>
+                    <a target="_blank" href style="display:inline-block;text-decoration:none;height:10px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393; font-size: initial;"><img src="/logo.jpg" style="float:left;vertical-align:middle">京公网安备 11010502038003号 </a>
                     
                 </p>
             </div>
