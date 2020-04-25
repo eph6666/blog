@@ -18,11 +18,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          AWS 案例研究：虎牙直播 - yfwang | Blog
+          BN-0017 - yfwang | Blog
         
     </title>
 
-    <link rel="canonical" href="https://blog.yi-fei.wang/2020/04/25/BN-0015/">
+    <link rel="canonical" href="https://blog.yi-fei.wang/2020/03/14/BN-0017/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -92,16 +92,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#AWS" title="AWS">AWS</a>
-                            
-                              <a class="tag" href="/tags/#案例" title="案例">案例</a>
+                              <a class="tag" href="/tags/#随笔" title="随笔">随笔</a>
                             
                         </div>
-                        <h1>AWS 案例研究：虎牙直播</h1>
+                        <h1>BN-0017</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by yfwang on
-                            2020-04-25
+                            2020-03-14
                         </span>
                     </div>
                 
@@ -218,31 +216,15 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>虎牙业务想海外延伸，覆盖东南亚和南美</p>
-<p>比较看重的点</p>
-<ul>
-<li>有完整API</li>
-<li>覆盖全球</li>
-<li>稳定可恢复</li>
-<li>弹性伸缩</li>
-</ul>
-<h2 id="痛点"><a href="#痛点" class="headerlink" title="痛点"></a>痛点</h2><ul>
-<li>节假日会造成流量突发增长，因为业务覆盖了大量国家地区，涉及大量文化，无法预测</li>
-<li>主播上线会发送通知，大量主播同事开播流量可瞬间暴涨20倍，会引发消息拥堵</li>
-</ul>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ul>
-<li>Lambda灵活扩容，按次计费，无需配置</li>
-<li>消息推送使用SQS服务，自动扩容，数亿级别消息传送时响应时间无衰减</li>
-<li>DynamoDB，灵活的NoSQL数据库，无论规模大小都能提供毫秒级性能，存储动态信息，如支付，状态，好友关系等</li>
-<li>静态信息使用Aurora，兼容MySQL和PostgreSQL，自动扩容，计算和存储分离，当数据量过大时，可以单独升级计算实例，保证性能。性能是MySQL5倍以上，10秒完成故障迁移。全球数据库，在某地创建Aurora，可以在其他地方创建副本，提升当地用户体验</li>
-<li>Neptune图形数据库，进行标签间的深刻搜索，以确定标签间的关系，用户间的关系，比关系型数据库更有优势。</li>
-<li>多语言翻译服务</li>
-</ul>
-<h2 id="收益"><a href="#收益" class="headerlink" title="收益"></a>收益</h2><ul>
-<li>创建数据中心用时过长，组建AWS级别的全球网络时间和经济成本难以估量</li>
-<li>使用大量托管服务，Lambda，SQS，Aurora，节约开发时间</li>
-<li>灵活调配资源，节省成本</li>
-</ul>
+                <p>我怀着无比痛苦的心情，决定暂时放弃坚持每天练字这件事情。</p>
+<p>并不是我无法坚持这件事，我已经坚持完成了三天的书写，今天是第四天了</p>
+<p>也并非每天没有这个时间，忙到写一页的时间都抽不出</p>
+<p>经历这三天痛苦的练习，我写不好任何一个字，任何一个笔画</p>
+<p>不是那种我今天写不好，明天就可以好一点的那种，我找不到门路，不知道如何下笔，盲人摸象般的练习</p>
+<p>一个字写100遍，还是一样，不知道该如何写好每一个笔画</p>
+<p>我决定暂时放弃练字吧，拿出这个时间，哪怕是看看电影，也比这样要好，是吧</p>
+<p>练字这个时期，我没和任何人说，我也无法跟任何人说我放弃的原因，也无法寻求帮助，暂时就先放在这吧，换成每天读读书，也挺好呢</p>
+<p>想到练字的成本，买了两个本子，30，还有一个台灯，加起来也200了，真是可惜</p>
 
 
 
@@ -251,13 +233,9 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2020/04/25/BN-0016/" data-toggle="tooltip" data-placement="top" title="BN-0016">&larr; Previous Post</a>
+                            <a href="/2020/03/30/BN-0001/" data-toggle="tooltip" data-placement="top" title="Use kops to Deploy Kubernetes on AWS">&larr; Previous Post</a>
                         </li>
                     
-                    
-                        <li class="next">
-                            <a href="/2020/04/25/BN-0014/" data-toggle="tooltip" data-placement="top" title="AWS 产品学习：Aurora">Next Post &rarr;</a>
-                        </li>
                     
                 </ul>
 
@@ -315,9 +293,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#AWS" title="AWS">AWS</a>
-                        
-                          <a class="tag" href="/tags/#案例" title="案例">案例</a>
+                          <a class="tag" href="/tags/#随笔" title="随笔">随笔</a>
                         
                     </div>
                 </section>

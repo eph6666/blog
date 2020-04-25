@@ -18,11 +18,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          AWS 案例研究：虎牙直播 - yfwang | Blog
+          BN-0016 - yfwang | Blog
         
     </title>
 
-    <link rel="canonical" href="https://blog.yi-fei.wang/2020/04/25/BN-0015/">
+    <link rel="canonical" href="https://blog.yi-fei.wang/2020/04/25/BN-0016/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -92,12 +92,12 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#AWS" title="AWS">AWS</a>
+                              <a class="tag" href="/tags/#Kubernetes" title="Kubernetes">Kubernetes</a>
                             
-                              <a class="tag" href="/tags/#案例" title="案例">案例</a>
+                              <a class="tag" href="/tags/#Network" title="Network">Network</a>
                             
                         </div>
-                        <h1>AWS 案例研究：虎牙直播</h1>
+                        <h1>BN-0016</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by yfwang on
@@ -218,31 +218,57 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>虎牙业务想海外延伸，覆盖东南亚和南美</p>
-<p>比较看重的点</p>
-<ul>
-<li>有完整API</li>
-<li>覆盖全球</li>
-<li>稳定可恢复</li>
-<li>弹性伸缩</li>
-</ul>
-<h2 id="痛点"><a href="#痛点" class="headerlink" title="痛点"></a>痛点</h2><ul>
-<li>节假日会造成流量突发增长，因为业务覆盖了大量国家地区，涉及大量文化，无法预测</li>
-<li>主播上线会发送通知，大量主播同事开播流量可瞬间暴涨20倍，会引发消息拥堵</li>
-</ul>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ul>
-<li>Lambda灵活扩容，按次计费，无需配置</li>
-<li>消息推送使用SQS服务，自动扩容，数亿级别消息传送时响应时间无衰减</li>
-<li>DynamoDB，灵活的NoSQL数据库，无论规模大小都能提供毫秒级性能，存储动态信息，如支付，状态，好友关系等</li>
-<li>静态信息使用Aurora，兼容MySQL和PostgreSQL，自动扩容，计算和存储分离，当数据量过大时，可以单独升级计算实例，保证性能。性能是MySQL5倍以上，10秒完成故障迁移。全球数据库，在某地创建Aurora，可以在其他地方创建副本，提升当地用户体验</li>
-<li>Neptune图形数据库，进行标签间的深刻搜索，以确定标签间的关系，用户间的关系，比关系型数据库更有优势。</li>
-<li>多语言翻译服务</li>
-</ul>
-<h2 id="收益"><a href="#收益" class="headerlink" title="收益"></a>收益</h2><ul>
-<li>创建数据中心用时过长，组建AWS级别的全球网络时间和经济成本难以估量</li>
-<li>使用大量托管服务，Lambda，SQS，Aurora，节约开发时间</li>
-<li>灵活调配资源，节省成本</li>
-</ul>
+                <h1 id="子网"><a href="#子网" class="headerlink" title="子网"></a>子网</h1><h2 id="默认子网"><a href="#默认子网" class="headerlink" title="默认子网"></a>默认子网</h2><pre><code>root@ip-10-233-0-38:~# kk get subnets
+NAME          PROTOCOL   CIDR            PRIVATE   NAT     DEFAULT   GATEWAYTYPE   USED   AVAILABLE
+join          IPv4       100.64.0.0/16   false     false   false     distributed   1      65534
+ovn-default   IPv4       10.222.0.0/16   false     true    true      distributed   4      65531
+</code></pre><p>Kube-OVN中以Subnet来组织IP，每个NS可以归属到不同的子网里</p>
+<p>NS下的Pod会自动从所属子网中获取IP，并共享网络配置（CIDR，网关类型，访问控制，NAT控制）</p>
+<p>Kube-OVN中会预设一个默认子网，未显示声明子网配置的NS会自动从默认子网中划分IP，并使用默认子网的网络配置。</p>
+<p>其中，默认子网使用分布式网关并对出口流量进行NAT转换，其行为与flannel的默认行为一致。</p>
+<p>默认子网为，spec中deault为true的子网，一个集群下默认子网只能有一个，且创建后不可修改</p>
+<h2 id="Node子网"><a href="#Node子网" class="headerlink" title="Node子网"></a>Node子网</h2><p>Kubernetes规定，所有Node都必须和Pod可以直接通信。</p>
+<p>为了达到这个目的，Kube-OVN床架了一个join子网，并在每个Node节点创建了一块虚拟网卡ovn0接入join子网，通过该网络完成主机和Pod的通信。</p>
+<pre><code>root@ip-10-233-0-38:~# ifconfig ovn0
+ovn0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 8901
+        inet 100.64.0.2  netmask 255.255.0.0  broadcast 100.64.255.255
+        inet6 fe80::f495:ecff:fe40:3  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether f6:95:ec:40:00:03  txqueuelen 1000  (Ethernet)
+        RX packets 9135  bytes 680477 (680.4 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 8750  bytes 6418800 (6.4 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+</code></pre><h2 id="自定义子网"><a href="#自定义子网" class="headerlink" title="自定义子网"></a>自定义子网</h2><p>一个或多个NS可以被绑定到一个子网中。</p>
+<h3 id="创建子网"><a href="#创建子网" class="headerlink" title="创建子网"></a>创建子网</h3><pre><code>root@ip-10-233-0-38:~# cat &lt;&lt;EOF | kubectl create -f -
+&gt; apiVersion: kubeovn.io/v1
+&gt; kind: Subnet
+&gt; metadata:
+&gt;   name: sn1
+&gt; spec:
+&gt;   protocol: IPv4
+&gt;   cidrBlock: 10.100.0.0/16
+&gt;   excludeIps:
+&gt;   - 10.100.0.1..10.100.0.10
+&gt;   gateway: 10.100.0.1
+&gt;   namespaces:
+&gt;   - ns1
+&gt; EOF
+subnet.kubeovn.io/sn1 created
+
+root@ip-10-233-0-38:~# kubectl create ns ns1
+namespace/ns1 created
+root@ip-10-233-0-38:~# kubectl run nginx --image=nginx:alpine -n ns1
+kubectl run --generator=deployment/apps.v1 is DEPRECATED and will be removed in a future version. Use kubectl run --generator=run-pod/v1 or kubectl create instead.
+deployment.apps/nginx created
+root@ip-10-233-0-38:~# kubectl get pod  -o wide --all-namespaces|grep nginx
+default       nginx-7cdbd8cdc9-f2vg9                   1/1     Running   0          42m   10.222.0.5    ip-10-233-0-38   &lt;none&gt;           &lt;none&gt;
+ns1           nginx-6b4b85b77b-rtstm                   1/1     Running   0          9s    10.100.0.11   ip-10-233-0-38   &lt;none&gt;           &lt;none&gt;
+root@ip-10-233-0-38:~# kk get subnet
+NAME          PROTOCOL   CIDR            PRIVATE   NAT     DEFAULT   GATEWAYTYPE   USED   AVAILABLE
+join          IPv4       100.64.0.0/16   false     false   false     distributed   1      65534
+ovn-default   IPv4       10.222.0.0/16   false     true    true      distributed   4      65531
+sn1           IPv4       10.100.0.0/16   false     false   false     distributed   1      65525
+</code></pre><h2 id="子网访问控制"><a href="#子网访问控制" class="headerlink" title="子网访问控制"></a>子网访问控制</h2><p>TODO</p>
 
 
 
@@ -250,13 +276,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2020/04/25/BN-0016/" data-toggle="tooltip" data-placement="top" title="BN-0016">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2020/04/25/BN-0014/" data-toggle="tooltip" data-placement="top" title="AWS 产品学习：Aurora">Next Post &rarr;</a>
+                            <a href="/2020/04/25/BN-0015/" data-toggle="tooltip" data-placement="top" title="AWS 案例研究：虎牙直播">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -315,9 +337,9 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#AWS" title="AWS">AWS</a>
+                          <a class="tag" href="/tags/#Kubernetes" title="Kubernetes">Kubernetes</a>
                         
-                          <a class="tag" href="/tags/#案例" title="案例">案例</a>
+                          <a class="tag" href="/tags/#Network" title="Network">Network</a>
                         
                     </div>
                 </section>
