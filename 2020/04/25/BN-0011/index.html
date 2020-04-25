@@ -18,11 +18,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          东湖 - yfwang | Blog
+          BN-0011 - yfwang | Blog
         
     </title>
 
-    <link rel="canonical" href="https://blog.yi-fei.wang/2020/03/30/BN-0003/">
+    <link rel="canonical" href="https://blog.yi-fei.wang/2020/04/25/BN-0011/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -92,14 +92,12 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#随笔" title="随笔">随笔</a>
-                            
                         </div>
-                        <h1>东湖</h1>
+                        <h1>BN-0011</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by yfwang on
-                            2020-03-30
+                            2020-04-25
                         </span>
                     </div>
                 
@@ -216,11 +214,100 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p><img src="https://ww1.sinaimg.cn/large/005K5wz9ly1gdc04qypb3j30u0190q8p.jpg" alt="_20200225214104.jpg"></p>
-<p>肺炎这件事情从开始知道到现在也有一个多月了，一直没有太多的感受，可能是对武汉了解不深吧，上次去的匆忙，走的匆忙，感觉自己之于武汉，就是个局外人。</p>
-<p>今天在家无聊，就回忆过去一些美好的时间，想到有个下午是自己一个人坐在东湖边，是少有的清静悠闲的时光，吹着风，看着游客和学生，虽然自己也是一个提着行李箱的游客。</p>
-<p>湖边的风可能就是武汉的风景和武汉的舒爽。</p>
-<p>武汉加油吧，希望能有空再去那个台阶坐上一下午</p>
+                <p><a href="http://scrmtech.gensee.com/webcast/site/vod/play-7f5cd1a08aa34fe4b741f3a91402f488" target="_blank" rel="noopener">天涯若比邻- AWS全球数据库解决方案</a></p>
+<p><a href="http://zhiqu.qn.scrmtech.com/5191/19/meeting/1587459012/%E5%A4%A9%E6%B6%AF%E8%8B%A5%E6%AF%94%E9%82%BB-%E5%85%A8%E7%90%83%E5%90%8C%E5%BA%93%20Webinar%20.pdf" target="_blank" rel="noopener"></a></p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><ul>
+<li>灾备，跨region部署</li>
+<li>性能，多region分布，贴近用户</li>
+</ul>
+<h2 id="挑战"><a href="#挑战" class="headerlink" title="挑战"></a>挑战</h2><ul>
+<li>技术挑战，复杂拓扑，数据一致性，健壮性</li>
+<li>维护多个数据库难度指数增长</li>
+<li>未来拓展压力，增加新的节点</li>
+<li>辅助区域和主区域之间的延迟</li>
+</ul>
+<h1 id="RDS-Aurora"><a href="#RDS-Aurora" class="headerlink" title="RDS: Aurora"></a>RDS: Aurora</h1><ul>
+<li>媲美高端商业数据库的速度和可用性</li>
+<li>媲美开源数据库的简易性和成本</li>
+<li>完美兼容mysql和pgsql</li>
+<li>按量付费</li>
+<li>完全托管</li>
+</ul>
+<h2 id="核心技术：共享存储卷-分布式存储）"><a href="#核心技术：共享存储卷-分布式存储）" class="headerlink" title="核心技术：共享存储卷(分布式存储）"></a>核心技术：共享存储卷(分布式存储）</h2><ul>
+<li>日志 → share disk → az disk</li>
+<li>写入性能极强！</li>
+<li>读取横向扩展</li>
+<li>az+1的容错机制</li>
+<li>即时数据库重做恢复</li>
+</ul>
+<p>mysql可以通过调整参数来调优，但是会牺牲高可用性等安全性，但Aurora可以实现兼得</p>
+<p>采用4/6（6写4成功）容错机制：</p>
+<p>保证az崩溃时，可以写入，</p>
+<p>当另一个az中同时也有硬件设备故障，达成3/6，仍然可读</p>
+<h2 id="高可用与只读副本的实现"><a href="#高可用与只读副本的实现" class="headerlink" title="高可用与只读副本的实现"></a>高可用与只读副本的实现</h2><h3 id="Region内部"><a href="#Region内部" class="headerlink" title="Region内部"></a>Region内部</h3><p>mysql：辅助bin log，在主节点上的操作，需要在只读节点上重现一遍，数据冗余两份，只读节点同样有大量的写入操作</p>
+<p>Aurora，share disk，以物理方式，使用delta变更向量，不向只读节点写入，region内复制延迟&lt;20ms</p>
+<h3 id="全球"><a href="#全球" class="headerlink" title="全球"></a>全球</h3><p>全局物理复制</p>
+<ol>
+<li>主实例将日志记录发送到存储节点，只读实例和复制服务器</li>
+<li>复制服务器将日志流推送到secondary region的复制代理</li>
+<li>复制代理将日志并行发送给存储节点和只读副本</li>
+<li>复制服务器可以从存储节点拉日志记录以弥补故障造成的间隙</li>
+</ol>
+<p>高吞吐：即使高达150k write/s</p>
+<p>低负载，复制对性能的影响也是微乎其微</p>
+<p>读复制延迟，高负载下依然保持此庙级跨区域复制的延迟</p>
+<p>快速恢复：区域故障后1分钟以内可以承担全面读写功能</p>
+<h2 id="跨region恢复-迁移"><a href="#跨region恢复-迁移" class="headerlink" title="跨region恢复/迁移"></a>跨region恢复/迁移</h2><ol>
+<li>Promote 新region，大概需要1min</li>
+<li>切换流量（切dns）</li>
+</ol>
+<h1 id="Dynamodb-NoSQL"><a href="#Dynamodb-NoSQL" class="headerlink" title="Dynamodb: NoSQL"></a>Dynamodb: NoSQL</h1><p><a href="https://www.notion.so/b94ce9bcf4d145ab95e345ee7f642a9e" target="_blank" rel="noopener">Untitled</a></p>
+<h2 id="选择DynamoDB的原因"><a href="#选择DynamoDB的原因" class="headerlink" title="选择DynamoDB的原因"></a>选择DynamoDB的原因</h2><ul>
+<li>查询和更新相对固定，但频率高</li>
+<li>规模增长快（规模增长，性能不受影响）</li>
+<li>读写弹性大</li>
+<li><p>全球扩展</p>
+</li>
+<li><p>个位数毫秒性能</p>
+</li>
+<li>自动扩容，自动分区，弹性伸缩</li>
+<li>支持Global Table</li>
+</ul>
+<h2 id="架构举例：推送服务中应对突发大业务量"><a href="#架构举例：推送服务中应对突发大业务量" class="headerlink" title="架构举例：推送服务中应对突发大业务量"></a>架构举例：推送服务中应对突发大业务量</h2><h3 id="推送服务特点"><a href="#推送服务特点" class="headerlink" title="推送服务特点"></a>推送服务特点</h3><ul>
+<li>业务量变化快</li>
+<li>低峰与高峰数值跃动大</li>
+<li>难以预测与预留资源</li>
+<li>订阅关系分布不均匀</li>
+<li>实时性要求高</li>
+</ul>
+<p><img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/11e9e9c7-f41b-46e6-b943-1844f26db719/Untitled.png" alt="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/11e9e9c7-f41b-46e6-b943-1844f26db719/Untitled.png"></p>
+<h2 id="Global-Tables"><a href="#Global-Tables" class="headerlink" title="Global Tables"></a>Global Tables</h2><ul>
+<li>全球跨区域复制</li>
+<li>多点写入</li>
+<li>冲突管理采用：Last Writer Wins方式（在业务层减少冲突的发生）</li>
+<li>支持Lambda</li>
+</ul>
+<h2 id="DynamoDB流的应用场景"><a href="#DynamoDB流的应用场景" class="headerlink" title="DynamoDB流的应用场景"></a>DynamoDB流的应用场景</h2><ul>
+<li>表之间的数据复制</li>
+<li>触发器</li>
+<li>容灾和多区域复制</li>
+<li>数据汇总</li>
+<li>数据安全和通知</li>
+</ul>
+<h1 id="ElastciCache"><a href="#ElastciCache" class="headerlink" title="ElastciCache"></a>ElastciCache</h1><h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><ul>
+<li>缓存</li>
+<li>实时分析</li>
+<li>游戏排行榜</li>
+<li>地理空间</li>
+<li>流媒体</li>
+<li>会话存储</li>
+<li>聊天应用</li>
+<li>消息队列</li>
+<li>机器学习</li>
+</ul>
+<h2 id="禁用集群模式（垂直伸缩）"><a href="#禁用集群模式（垂直伸缩）" class="headerlink" title="禁用集群模式（垂直伸缩）"></a>禁用集群模式（垂直伸缩）</h2><p>读写走主节点，增加只读节点</p>
+<h2 id="集群模式（水平伸缩）"><a href="#集群模式（水平伸缩）" class="headerlink" title="集群模式（水平伸缩）"></a>集群模式（水平伸缩）</h2><p>按键值分区，多节点，读写走ClusterMap</p>
+<p><a href="https://www.notion.so/32386e74255a43c89083b7861b6064d0" target="_blank" rel="noopener">Redis启用集群模式 VS 禁用集群模式</a></p>
 
 
 
@@ -228,13 +315,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2020/03/30/BN-0009/" data-toggle="tooltip" data-placement="top" title="说事儿">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2020/03/30/BN-0002/" data-toggle="tooltip" data-placement="top" title="记一次ETCD灾难恢复">Next Post &rarr;</a>
+                            <a href="/2020/03/30/BN-0004/" data-toggle="tooltip" data-placement="top" title="向死而生">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -293,8 +376,6 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#随笔" title="随笔">随笔</a>
-                        
                     </div>
                 </section>
                 
