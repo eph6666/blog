@@ -18,7 +18,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          BN-0011 - yfwang | Blog
+          天涯若比邻- AWS全球数据库解决方案 - yfwang | Blog
         
     </title>
 
@@ -93,7 +93,7 @@
                         <div class="tags">
                             
                         </div>
-                        <h1>BN-0011</h1>
+                        <h1>天涯若比邻- AWS全球数据库解决方案</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by yfwang on
@@ -151,14 +151,14 @@
 
                         
                         <li>
-                            <a class="navbar-brand" href="/tags/">Tags</a>
+                            <a class="navbar-brand" href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a class="navbar-brand" href="/archive/">Archives</a>
+                            <a class="navbar-brand" href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -261,7 +261,36 @@
 <li>Promote 新region，大概需要1min</li>
 <li>切换流量（切dns）</li>
 </ol>
-<h1 id="Dynamodb-NoSQL"><a href="#Dynamodb-NoSQL" class="headerlink" title="Dynamodb: NoSQL"></a>Dynamodb: NoSQL</h1><p><a href="https://www.notion.so/b94ce9bcf4d145ab95e345ee7f642a9e" target="_blank" rel="noopener">Untitled</a></p>
+<h1 id="Dynamodb-NoSQL"><a href="#Dynamodb-NoSQL" class="headerlink" title="Dynamodb: NoSQL"></a>Dynamodb: NoSQL</h1><table>
+<thead>
+<tr>
+<th>SQL</th>
+<th>NoSQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>针对存储优化</td>
+<td>针对计算优化</td>
+</tr>
+<tr>
+<td>规范化/关系型</td>
+<td>去规范化/层级型</td>
+</tr>
+<tr>
+<td>即席查询</td>
+<td>实例化视图</td>
+</tr>
+<tr>
+<td>垂直扩展</td>
+<td>水平扩展</td>
+</tr>
+<tr>
+<td>适合OLAP</td>
+<td>转为大规模OLTP构建</td>
+</tr>
+</tbody>
+</table>
 <h2 id="选择DynamoDB的原因"><a href="#选择DynamoDB的原因" class="headerlink" title="选择DynamoDB的原因"></a>选择DynamoDB的原因</h2><ul>
 <li>查询和更新相对固定，但频率高</li>
 <li>规模增长快（规模增长，性能不受影响）</li>
@@ -280,7 +309,6 @@
 <li>订阅关系分布不均匀</li>
 <li>实时性要求高</li>
 </ul>
-<p><img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/11e9e9c7-f41b-46e6-b943-1844f26db719/Untitled.png" alt="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/11e9e9c7-f41b-46e6-b943-1844f26db719/Untitled.png"></p>
 <h2 id="Global-Tables"><a href="#Global-Tables" class="headerlink" title="Global Tables"></a>Global Tables</h2><ul>
 <li>全球跨区域复制</li>
 <li>多点写入</li>
@@ -306,8 +334,7 @@
 <li>机器学习</li>
 </ul>
 <h2 id="禁用集群模式（垂直伸缩）"><a href="#禁用集群模式（垂直伸缩）" class="headerlink" title="禁用集群模式（垂直伸缩）"></a>禁用集群模式（垂直伸缩）</h2><p>读写走主节点，增加只读节点</p>
-<h2 id="集群模式（水平伸缩）"><a href="#集群模式（水平伸缩）" class="headerlink" title="集群模式（水平伸缩）"></a>集群模式（水平伸缩）</h2><p>按键值分区，多节点，读写走ClusterMap</p>
-<p><a href="https://www.notion.so/32386e74255a43c89083b7861b6064d0" target="_blank" rel="noopener">Redis启用集群模式 VS 禁用集群模式</a></p>
+<h2 id="集群模式（水平伸缩）"><a href="#集群模式（水平伸缩）" class="headerlink" title="集群模式（水平伸缩）"></a>集群模式（水平伸缩）</h2><p>按键值分区，多节点，读写走ClusterMap<br>|  特性   | 启用  |  禁用 |<br>|  —-  | —-  | —-  |<br>|配置 | 在不同分片间进行分区（最高15个），每个分片有一个主节点以，及最多5个副本节点 | 数据保存在一个主节点里，最多具有5个副本节点 |<br>|Redis compliant | 与开源Redis集群API以及客户端生态完全兼容 | 与开源Redis集群API以及客户端生态完全兼容 |<br>|集群规模 | 90个节点-15个主节点+每个分片的0-5个副本 | 6个节点（1主+0-5个副本） |<br>|伸缩性和性能 | 吞吐量随分片数量进行伸缩，内存最高可达到9.5TiB | 吞吐量有一个主节点和5个分本节点决定，内存容量最高到635GiB |<br>|最大连接数 | 主节点：65000<em>15=975000，副本：65000</em>75=4875000 | 主节点：65000，副本：65000<em>5=325000 |<br>|伸缩操作 | 集群在线调整尺寸，水平伸缩：添加或删除分片；只读活动伸缩：添加或删除副本 | 垂直伸缩：写操作被中断；禁止在主节点上进心读操作 |<br>|故障转移 | 15-30s，无需切换DNS | 30-45s+额外DNS广播时间 |<br>|故障转移风险 | 部分数据集上的写操作被影响，读操作无影响 | 整个数据集上的写操作被影响，读操作无影响 |<br>|成本 | 多个小机型组成 | 一个大机型组成 |<br>|假设当前需要140GB缓存 | 15</em>cache.r4.large($0.228hr) = $3.42 hour 184.5GB | 1*cache.r4.8xlarge = 3.64 hour, 203.26 GB |</p>
 
 
 
